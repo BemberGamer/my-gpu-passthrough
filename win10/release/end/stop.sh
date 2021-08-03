@@ -28,7 +28,4 @@ echo 1 > /sys/class/vtconsole/vtcon0/bind
 echo 1 > /sys/class/vtconsole/vtcon1/bind
 
 #Start you display manager
-systemctl start lightdm.service
-
-sleep 5
-shutdown
+systemctl start sddm.service
