@@ -6,7 +6,7 @@ set -x
 source "/etc/libvirt/hooks/kvm.conf"
 
 # Stop your display manager. If youre on kde it ll be sddm.service. Gnome users should use killall gdm-x-session instead
-systemctl stop lightdm.service
+systemctl stop sddm.service
 pulse_pid=$(pgrep -u guilherme pulseaudio)
 pipewire_pid=$(pgrep -u guilherme pipewire-media)
 kill $pulse_pid
