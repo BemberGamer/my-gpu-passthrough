@@ -18,7 +18,7 @@ echo 0 > /sys/class/vtconsole/vtcon1/bind
 
 
 # Avoid a race condition by waiting a couple of seconds. This can be calibrated to be shorter or longer if required for your system
-sleep 4
+sleep 10
 
 # Unload all Radeon drivers
 
