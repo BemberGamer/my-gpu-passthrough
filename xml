@@ -9,6 +9,23 @@
   <memory unit="KiB">8192000</memory>
   <currentMemory unit="KiB">8192000</currentMemory>
   <vcpu placement="static">12</vcpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu="0" cpuset="2"/>
+    <vcpupin vcpu="1" cpuset="10"/>
+    <vcpupin vcpu="2" cpuset="3"/>
+    <vcpupin vcpu="3" cpuset="11"/>
+    <vcpupin vcpu="4" cpuset="4"/>
+    <vcpupin vcpu="5" cpuset="12"/>
+    <vcpupin vcpu="6" cpuset="5"/>
+    <vcpupin vcpu="7" cpuset="13"/>
+    <vcpupin vcpu="8" cpuset="6"/>
+    <vcpupin vcpu="9" cpuset="14"/>
+    <vcpupin vcpu="10" cpuset="7"/>
+    <vcpupin vcpu="11" cpuset="15"/>
+    <emulatorpin cpuset="1,9"/>
+    <iothreadpin iothread="1" cpuset="1,9"/>
+  </cputune>
   <os>
     <type arch="x86_64" machine="pc-q35-6.0">hvm</type>
     <loader readonly="yes" type="pflash">/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</loader>
@@ -54,10 +71,10 @@
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="file" device="disk">
-      <driver name="qemu" type="qcow2"/>
+      <driver name="qemu" type="qcow2" iothread="1"/>
       <source file="/var/lib/libvirt/images/win10.qcow2"/>
       <target dev="vda" bus="virtio"/>
-      <boot order="1"/>
+      <boot order="2"/>
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </disk>
     <disk type="file" device="cdrom">
@@ -65,7 +82,7 @@
       <source file="/home/guilherme/Data/Win10_21H1_English_x64.iso"/>
       <target dev="sdb" bus="sata"/>
       <readonly/>
-      <boot order="2"/>
+      <boot order="3"/>
       <address type="drive" controller="0" bus="0" target="0" unit="1"/>
     </disk>
     <disk type="file" device="cdrom">
@@ -74,6 +91,14 @@
       <target dev="sdc" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="2"/>
+    </disk>
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/home/guilherme/Data/gparted-live-1.3.1-1-amd64.iso"/>
+      <target dev="sdd" bus="sata"/>
+      <readonly/>
+      <boot order="1"/>
+      <address type="drive" controller="0" bus="0" target="0" unit="3"/>
     </disk>
     <controller type="usb" index="0" model="qemu-xhci" ports="15">
       <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
@@ -168,12 +193,14 @@
       <source>
         <address domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
       </source>
+      <rom file="/home/guilherme/Downloads/Sapphire.RX560D.4096.170929.rom"/>
       <address type="pci" domain="0x0000" bus="0x09" slot="0x00" function="0x0"/>
     </hostdev>
     <hostdev mode="subsystem" type="pci" managed="yes">
       <source>
         <address domain="0x0000" bus="0x03" slot="0x00" function="0x1"/>
       </source>
+      <rom file="/home/guilherme/Downloads/Sapphire.RX560D.4096.170929.rom"/>
       <address type="pci" domain="0x0000" bus="0x0a" slot="0x00" function="0x0"/>
     </hostdev>
     <redirdev bus="usb" type="spicevmc">
